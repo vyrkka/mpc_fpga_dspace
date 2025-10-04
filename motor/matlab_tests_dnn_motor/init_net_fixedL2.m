@@ -1,0 +1,18 @@
+function pars_str =  init_net_fixedL2(h5_file, W, Q, F_)
+    wordLength = W;
+    fracLength = W-Q;
+    pars_str.wordLength = wordLength;
+    pars_str.fracLength = fracLength;
+    %x = [0 0 1]';
+    layers = importKerasLayers(h5_file, 'ImportWeights',true);
+    net = dlnetwork(layers);
+    fc0 = net.Layers(find(arrayfun(@(l) strcmp(l.Name, 'fc0'), net.Layers)));
+    fc1 = net.Layers(find(arrayfun(@(l) strcmp(l.Name, 'fc1'), net.Layers)));
+    fc2 = net.Layers(find(arrayfun(@(l) strcmp(l.Name, 'fc2'), net.Layers)));
+    pars_str.fc0W = fi(fc0.Weights, 1, wordLength, fracLength, F_);
+    pars_str.fc0B    = fi(fc0.Bias,    1, wordLength, fracLength, F_);
+    pars_str.fc1W = fi(fc1.Weights, 1, wordLength, fracLength, F_);
+    pars_str.fc1B    = fi(fc1.Bias,    1, wordLength, fracLength, F_);
+    pars_str.fc2W = fi(fc2.Weights, 1, wordLength, fracLength, F_);
+    pars_str.fc2B    = fi(fc2.Bias,    1, wordLength, fracLength, F_);    
+end

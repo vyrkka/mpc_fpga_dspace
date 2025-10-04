@@ -1,0 +1,62 @@
+hil 32 bits dense
+
+
+                                                 Type    Used   Available   Utilization [%]
+   Configurable Logic Block Slices (LUTs, Flip-Flops)   10611       50950             20.83
+                  Configurable Logic Block Slice LUTs   26025      203800             12.77
+            Configurable Logic Block Slice Flip-Flops   20457      407600              5.02
+                               Block RAM Blocks 36 Kb       1         445              0.22
+                               Block RAM Blocks 18 Kb       0         890              0.00
+                                           DSP Slices     238         840             28.33
+
+fis 32 bits dense
+
+                                                 Type     Used   Available   Utilization [%]
+   Configurable Logic Block Slices (LUTs, Flip-Flops)    46939       50950             92.13
+                  Configurable Logic Block Slice LUTs   138773      203800             68.09
+            Configurable Logic Block Slice Flip-Flops   115304      407600             28.29
+                               Block RAM Blocks 36 Kb       24         445              5.39
+                               Block RAM Blocks 18 Kb       16         890              1.80
+                                           DSP Slices      380         840             45.24
+
+
+hil 32 bits
+
+
+                                                 Type    Used   Available   Utilization [%]
+   Configurable Logic Block Slices (LUTs, Flip-Flops)    5952       50950             11.68
+                  Configurable Logic Block Slice LUTs   14426      203800              7.08
+            Configurable Logic Block Slice Flip-Flops   11825      407600              2.90
+                               Block RAM Blocks 36 Kb       1         445              0.22
+                               Block RAM Blocks 18 Kb       0         890              0.00
+                                           DSP Slices     102         840             12.14
+
+fis 32 bits
+
+                                                 Type     Used   Available   Utilization [%]
+   Configurable Logic Block Slices (LUTs, Flip-Flops)    44026       50950             86.41
+                  Configurable Logic Block Slice LUTs   127134      203800             62.38
+            Configurable Logic Block Slice Flip-Flops   106672      407600             26.17
+                               Block RAM Blocks 36 Kb       24         445              5.39
+                               Block RAM Blocks 18 Kb       16         890              1.80
+                                           DSP Slices      244         840             29.05
+
+hil 21 bits
+
+                                                 Type    Used   Available   Utilization [%]
+   Configurable Logic Block Slices (LUTs, Flip-Flops)    4812       50950              9.44
+                  Configurable Logic Block Slice LUTs   11423      203800              5.61
+            Configurable Logic Block Slice Flip-Flops   10561      407600              2.59
+                               Block RAM Blocks 36 Kb       1         445              0.22
+                               Block RAM Blocks 18 Kb       0         890              0.00
+                                           DSP Slices      50         840              5.95
+
+fis 21 bits 
+
+                                                 Type     Used   Available   Utilization [%]
+   Configurable Logic Block Slices (LUTs, Flip-Flops)    43008       50950             84.41
+                  Configurable Logic Block Slice LUTs   124119      203800             60.90
+            Configurable Logic Block Slice Flip-Flops   105404      407600             25.86
+                               Block RAM Blocks 36 Kb       24         445              5.39
+                               Block RAM Blocks 18 Kb       16         890              1.80
+                                           DSP Slices      192         840             22.86

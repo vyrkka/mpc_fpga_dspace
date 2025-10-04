@@ -1,0 +1,34 @@
+--------------------------------- Version Log ----------------------------------
+Version                                 Path
+System Generator 2022.2                 C:/Xilinx/Vivado/2022.2
+Matlab 9.11.0.2358333 (R2021b) Update 7 C:\Program Files\MATLAB\R2021b
+Vivado 2022.2                           C:/Xilinx/Vivado/2022.2
+--------------------------------------------------------------------------------
+Summary of Errors:
+Error 0001: Input data type for port "done" must have width=1.
+     Block: 'mpc_implicito1/Black Box21'
+Error 0002: Input data type for port "done" must have width=1.
+     Block: 'mpc_implicito1/Black Box21'
+--------------------------------------------------------------------------------
+
+Error 0001:
+
+Reported by:
+  'mpc_implicito1/Black Box21'
+
+Details:
+Input data type for port "done" must have width=1.
+Error occurred during "Rate and Type Propagation".
+
+--------------------------------------------------------------------------------
+
+Error 0001:
+
+Reported by:
+  'mpc_implicito1/Black Box21'
+
+Details:
+Input data type for port "done" must have width=1.
+Error occurred during "Rate and Type Error Checking".
+
+--------------------------------------------------------------------------------

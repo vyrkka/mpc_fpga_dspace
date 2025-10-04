@@ -1,0 +1,80 @@
+imp HIL w16
+
+                                                 Type    Used   Available   Utilization [%]
+   Configurable Logic Block Slices (LUTs, Flip-Flops)    5883       50950             11.55
+                  Configurable Logic Block Slice LUTs   14960      203800              7.34
+            Configurable Logic Block Slice Flip-Flops   11608      407600              2.85
+                               Block RAM Blocks 36 Kb       1         445              0.22
+                               Block RAM Blocks 18 Kb       8         890              0.90
+                                           DSP Slices      60         840              7.14
+
+
+imp FIS w16
+
+                                                 Type     Used   Available   Utilization [%]
+   Configurable Logic Block Slices (LUTs, Flip-Flops)    43081       50950             84.56
+                  Configurable Logic Block Slice LUTs   127635      203800             62.63
+            Configurable Logic Block Slice Flip-Flops   106453      407600             26.12
+                               Block RAM Blocks 36 Kb       24         445              5.39
+                               Block RAM Blocks 18 Kb       24         890              2.70
+                                           DSP Slices      202         840             24.05
+
+
+imp HIL w18
+
+                                                 Type    Used   Available   Utilization [%]
+   Configurable Logic Block Slices (LUTs, Flip-Flops)    6135       50950             12.04
+                  Configurable Logic Block Slice LUTs   15569      203800              7.64
+            Configurable Logic Block Slice Flip-Flops   12093      407600              2.97
+                               Block RAM Blocks 36 Kb       1         445              0.22
+                               Block RAM Blocks 18 Kb       8         890              0.90
+                                           DSP Slices      71         840              8.45
+
+imp FIS w18
+
+
+                                                 Type     Used   Available   Utilization [%]
+   Configurable Logic Block Slices (LUTs, Flip-Flops)    43830       50950             86.03
+                  Configurable Logic Block Slice LUTs   128272      203800             62.94
+            Configurable Logic Block Slice Flip-Flops   106938      407600             26.24
+                               Block RAM Blocks 36 Kb       24         445              5.39
+                               Block RAM Blocks 18 Kb       24         890              2.70
+                                           DSP Slices      213         840             25.36
+
+imp HIL w21
+                                                 Type    Used   Available   Utilization [%]
+   Configurable Logic Block Slices (LUTs, Flip-Flops)    6630       50950             13.01
+                  Configurable Logic Block Slice LUTs   16706      203800              8.20
+            Configurable Logic Block Slice Flip-Flops   12764      407600              3.13
+                               Block RAM Blocks 36 Kb       9         445              2.02
+                               Block RAM Blocks 18 Kb       0         890              0.00
+                                           DSP Slices      90         840             10.71
+
+imp FIS w21
+                                                 Type     Used   Available   Utilization [%]
+   Configurable Logic Block Slices (LUTs, Flip-Flops)    43948       50950             86.26
+                  Configurable Logic Block Slice LUTs   129420      203800             63.50
+            Configurable Logic Block Slice Flip-Flops   107607      407600             26.40
+                               Block RAM Blocks 36 Kb       32         445              7.19
+                               Block RAM Blocks 18 Kb       16         890              1.80
+                                           DSP Slices      232         840             27.62
+
+imp HIL w32
+
+                                                 Type    Used   Available   Utilization [%]
+   Configurable Logic Block Slices (LUTs, Flip-Flops)    8567       50950             16.81
+                  Configurable Logic Block Slice LUTs   23336      203800             11.45
+            Configurable Logic Block Slice Flip-Flops   14708      407600              3.61
+                               Block RAM Blocks 36 Kb      10         445              2.25
+                               Block RAM Blocks 18 Kb       0         890              0.00
+                                           DSP Slices     150         840             17.86
+
+imp FIS w32
+
+                                                 Type     Used   Available   Utilization [%]
+   Configurable Logic Block Slices (LUTs, Flip-Flops)    45786       50950             89.86
+                  Configurable Logic Block Slice LUTs   136111      203800             66.79
+            Configurable Logic Block Slice Flip-Flops   109551      407600             26.88
+                               Block RAM Blocks 36 Kb       33         445              7.42
+                               Block RAM Blocks 18 Kb       16         890              1.80
+                                           DSP Slices      292         840             34.76

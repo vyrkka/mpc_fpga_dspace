@@ -1,0 +1,29 @@
+//Entrenar redes motor
+python create_model_float.py -t motorB train_data/motorB.csv 3 3 9 1
+python create_model_fixed.py -q motorB train_data/motorB.csv 3 21 7 3 9 1
+
+//sweep motorA
+chmod +x motor_sweepA.sh
+./motor_sweepA.sh 3 5 6 7 8 9 10
+
+//sweep motorB
+chmod +x motor_sweepB.sh
+./motor_sweepB.sh 3 5 6 7 8 9 10
+
+
+//formatear verilog explicito
+python format_verilogs.py --base-routes  W21Q7_sp --carpetas-verilog W21Q7_sp --es-red 1 --inputs vel pos r --outputs u
+//formatear verilog implicito y/o estimador
+python format_verilogs.py --base-routes  w21 --carpetas-verilog impw21 estw21
+
+//pruning
+python prune_model_float.py motorB 3 9 --threshold=1e-3
+python prune_model_fixed.py motorB 3 9 21 7 --threshold=1e-3
+
+//crear archivos HLS4ML a partir de red entrenada
+python create_hls_prj.py motorB 3 9 21 7 --fr=1
+
+//Procesar redes para ser usadas en matlab
+python h5_to_matlab.py --L 3 --M 9 --W 21 --Q 7 --nx 3 --nu 1 --var_type fixed --problem motorB --pruned
+python h5_to_matlab.py --L 3 --M 9 --W 21 --Q 7 --nx 3 --nu 1 --var_type fixed --problem motorB
+python h5_to_matlab.py --L 3 --M 9 --nx 3 --nu 1 --var_type float --problem motorB --pruned

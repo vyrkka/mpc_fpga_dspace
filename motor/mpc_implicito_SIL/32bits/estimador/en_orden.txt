@@ -1,0 +1,12 @@
+this_block.addFile('estimador_func_flow_control_loop_pipe_sequential_init.v');
+this_block.addFile('estimador_func_mul_32ns_32s_64_1_1.v');
+this_block.addFile('estimador_func_mul_32s_32ns_64_1_1.v');
+this_block.addFile('estimador_func_mux_32_32_1_1.v');
+this_block.addFile('estimador_func_estimador_func_Pipeline_mvmult_row.v');
+this_block.addFile('estimador_func_estimador_func_Pipeline_mvmult_row1.v');
+this_block.addFile('estimador_func_estimador_func_Pipeline_mvmult_row2.v');
+this_block.addFile('estimador_func_estimador_func_Pipeline_vadd_row.v');
+this_block.addFile('estimador_func_estimador_func_Pipeline_vadd_row3.v');
+this_block.addFile('estimador_func_mux_32_32_1_1_x.v');
+this_block.addFile('estimador_func_estimador_func_Pipeline_VITIS_LOOP_66_1.v');
+this_block.addFile('estimador_func.v');
