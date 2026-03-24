@@ -2,8 +2,8 @@ clearvars -except u_act32 vel32 pos32 u_act16 vel16 pos16
 
 %dbstop if warning fi:overflow
 %dbclear if warning fi:overflow
-wl = 32; %7 para parte entera
-fl = 24;
+wl = 21; %7 para parte entera
+fl = 14;
 
 wl_est = wl;
 fl_est = fl;
@@ -29,7 +29,7 @@ P.LoggingMode = 'off';
 P.NumericTypeDisplay = 'none';
 P.FimathDisplay = 'none';
 
-N_HOR = 3;      % Ns: tamaños del horizonte de predicción
+N_HOR = 4;      % Ns: tamaños del horizonte de predicción
 ADMM_iters = 20;
 
 % Arreglo de tiempo
