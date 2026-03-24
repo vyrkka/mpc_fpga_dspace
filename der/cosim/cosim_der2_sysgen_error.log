@@ -1,0 +1,29 @@
+--------------------------------- Version Log ----------------------------------
+Version                                 Path
+System Generator 2022.2                 C:/Xilinx/Vivado/2022.2
+Matlab 9.11.0.2358333 (R2021b) Update 7 C:\Program Files\MATLAB\R2021b
+Vivado 2022.2                           C:/Xilinx/Vivado/2022.2
+--------------------------------------------------------------------------------
+Summary of Errors:
+Error 0001: XSim Initialization Error:
+Please make sure that Vivado l...
+     Block: 'cosim_der2/Black Box2'
+--------------------------------------------------------------------------------
+
+Error 0001:
+
+Reported by:
+  'cosim_der2/Black Box2'
+
+Details:
+XSim Initialization Error:
+Please make sure that Vivado library path,
+C:/Xilinx/Vivado/2022.2/lib/win64.o, is also added in your
+LD_LIBRARY_PATH environment.
+ XSim engine error: Failed to initialize XSI interface for shared
+library, C:\Users\fabus/AppData/Local/Xilinx/Sysgen/SysgenVivado/win64.o/9cccfd2f54274443141a31bacd169681/xsim.dir/valid_out15_behav/xsimk.dll.
+ ERROR: XSim shared library,
+C:\Users\fabus/AppData/Local/Xilinx/Sysgen/SysgenVivado/win64.o/9cccfd2f54274443141a31bacd169681/xsim.dir/valid_out15_behav/xsimk.dll,
+doesn't exist.
+
+--------------------------------------------------------------------------------

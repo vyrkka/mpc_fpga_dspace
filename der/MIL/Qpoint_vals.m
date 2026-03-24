@@ -1,0 +1,11 @@
+xs.model.Q.vcd = 90.3679;
+xs.model.Q.vcq = 0;
+xs.model.Q.vgd = 90.3679;
+xs.model.Q.vgq = 0;
+xs.model.Q.ws = 314.159;
+xs.model.Q.ifd = 0.0496446;
+xs.model.Q.ifq = 0.167032;
+xs.model.Q.vsd = 90.6285;
+xs.model.Q.vsq = -0.0838276;
+xs.model.Q.igd = 0.0493286;
+xs.model.Q.igq = -0.17463;

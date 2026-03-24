@@ -1,0 +1,11 @@
+xs.model.Q.vcd = xs.sim.vcdq_sat0(1);
+xs.model.Q.vcq = xs.sim.vcdq_sat0(2);
+xs.model.Q.vgd = 100.409;
+xs.model.Q.vgq = 0;
+xs.model.Q.ws = 314.159;
+xs.model.Q.ifd = -9.98073 + 0.0999504 *xs.sim.Q.vcd + 0.322264 *xs.sim.Q.vcq;
+xs.model.Q.ifq = 32.5437 - 0.322264 *xs.sim.Q.vcd + 0.0999504 *xs.sim.Q.vcq;
+xs.model.Q.vsd = 51.4688 + 0.490291 *xs.sim.Q.vcd + 0.145723 *xs.sim.Q.vcq;
+xs.model.Q.vsq = 14.5387 - 0.145723 *xs.sim.Q.vcd + 0.490291 *xs.sim.Q.vcq;
+xs.model.Q.igd = -9.92593 + 0.0994011 *xs.sim.Q.vcd + 0.324112 *xs.sim.Q.vcq;
+xs.model.Q.igq = 32.3497 - 0.324112 *xs.sim.Q.vcd + 0.0994011 *xs.sim.Q.vcq;
