@@ -269,27 +269,27 @@ grid on;
 
 
 % % Escribir matrices
-% txtfile = "system.cpp";
-% txtfileID = fopen(txtfile,'w');
-% 
-% fprintf(txtfileID, "\n#include "+char(34)+"system.hpp"+char(34)+"\n\n");
-% 
-% fx_cpp_print_matrix(txtfileID, R, "data_t R[M_QP][N_QP]", M_QP, N_QP)
-% fx_cpp_print_matrix(txtfileID, -a, "data_t a_neg[N_QP]", N_QP)
-% fx_cpp_print_matrix(txtfileID, b, "data_t b[N_QP]", N_QP)
-% fx_cpp_print_matrix(txtfileID, d, "data_t d[N_SYS*N_HOR]", (N_SYS*N_HOR))
-% fx_cpp_print_matrix(txtfileID, e, "data_t e[N_SYS*N_HOR]", (N_SYS*N_HOR))
-% fx_cpp_print_matrix(txtfileID, E, "data_t E[N_SYS*N_HOR][N_SYS]", (N_SYS*N_HOR), N_SYS)
-% fx_cpp_print_matrix(txtfileID, qt_sinx0, "data_t qt_sinx0[N_SYS][N_QP]", N_SYS, N_QP)
-% 
-% fx_cpp_print_matrix(txtfileID, W_inv, "data_t W_inv[N_QP][N_QP]", N_QP, N_QP)
-% fx_cpp_print_matrix(txtfileID, RhoRt_neg, "data_t RhoRt_neg[N_QP][M_QP]", N_QP, M_QP)
-% 
-% fx_cpp_print_matrix(txtfileID, Ax, "data_t Ax[N_SYS+1][N_SYS+1]", N_SYS+1, N_SYS+1)
-% fx_cpp_print_matrix(txtfileID, Bx, "data_t Bx[N_SYS+1][M_SYS]", N_SYS+1, M_SYS)
-% fx_cpp_print_matrix(txtfileID, Lobs, "data_t Lx[N_SYS+1][P_SYS]", N_SYS+1, P_SYS)
-% 
-% fprintf(txtfileID, "\n");
-% 
-% fclose(txtfileID);
+txtfile = "system.cpp";
+txtfileID = fopen(txtfile,'w');
+ 
+fprintf(txtfileID, "\n#include "+char(34)+"system.hpp"+char(34)+"\n\n");
+ 
+fx_cpp_print_matrix(txtfileID, R, "data_t R[M_QP][N_QP]", M_QP, N_QP)
+fx_cpp_print_matrix(txtfileID, -a, "data_t a_neg[N_QP]", N_QP)
+fx_cpp_print_matrix(txtfileID, b, "data_t b[N_QP]", N_QP)
+fx_cpp_print_matrix(txtfileID, d, "data_t d[N_SYS*N_HOR]", (N_SYS*N_HOR))
+fx_cpp_print_matrix(txtfileID, e, "data_t e[N_SYS*N_HOR]", (N_SYS*N_HOR))
+fx_cpp_print_matrix(txtfileID, E, "data_t E[N_SYS*N_HOR][N_SYS]", (N_SYS*N_HOR), N_SYS)
+fx_cpp_print_matrix(txtfileID, qt_sinx0, "data_t qt_sinx0[N_SYS][N_QP]", N_SYS, N_QP)
+ 
+fx_cpp_print_matrix(txtfileID, W_inv, "data_t W_inv[N_QP][N_QP]", N_QP, N_QP)
+fx_cpp_print_matrix(txtfileID, RhoRt_neg, "data_t RhoRt_neg[N_QP][M_QP]", N_QP, M_QP)
+ 
+fx_cpp_print_matrix(txtfileID, Ax, "data_t Ax[N_SYS+1][N_SYS+1]", N_SYS+1, N_SYS+1)
+fx_cpp_print_matrix(txtfileID, Bx, "data_t Bx[N_SYS+1][M_SYS]", N_SYS+1, M_SYS)
+fx_cpp_print_matrix(txtfileID, Lobs, "data_t Lx[N_SYS+1][P_SYS]", N_SYS+1, P_SYS)
+ 
+fprintf(txtfileID, "\n");
+ 
+fclose(txtfileID);
 
