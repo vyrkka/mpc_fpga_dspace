@@ -44,6 +44,9 @@ python python_scripts/prune_model_fixed.py motorB 3 9 21 7 --threshold 1e-3
 // Crear archivos HLS4ML
 python python_scripts/create_hls_prj.py motorB 3 9 21 7 --fr 1
 
+// Generar golden references (Explicit MPC)
+python python_scripts/create_golden_ref.py motor/datasets/motorB.csv 3 1 --test_size 0.15 --filelength 10000 --golden_path motor/matlab_cosim_motor/ --in_file motor_in.csv --out_file motor_out.csv
+
 // =============================================================================
 // CONVERT TO MATLAB (H5_TO_MATLAB)
 // =============================================================================
