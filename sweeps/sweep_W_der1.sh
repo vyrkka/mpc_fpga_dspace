@@ -13,7 +13,7 @@ REG_TYPE=$3
 REG_GAIN=$4
 
 # --- fixed params (edit if needed) ---
-MODEL="der1"
+MODEL="der/trained_dnns/der1"
 DATA="der/MIL/der_data1.csv"
 NX=9
 Q=8        # fixed Q

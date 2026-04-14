@@ -1,0 +1,93 @@
+Backend: Vitis
+ClockPeriod: 10
+HLSConfig:
+  LayerName:
+    fc0:
+      Precision:
+        bias: fixed<22,8>
+        result: fixed<22,8,RND,SAT>
+        weight: fixed<22,8>
+      Trace: true
+    fc0_input:
+      Precision:
+        result: fixed<22,8,RND,SAT>
+      Trace: true
+    fc0_linear:
+      Precision:
+        result: fixed<22,8,RND,SAT>
+      Trace: true
+    fc1:
+      Precision:
+        bias: fixed<22,8>
+        result: fixed<22,8,RND,SAT>
+        weight: fixed<22,8>
+      Trace: true
+    fc1_linear:
+      Precision:
+        result: fixed<22,8,RND,SAT>
+      Trace: true
+    fc2:
+      Precision:
+        bias: fixed<22,8>
+        result: fixed<22,8,RND,SAT>
+        weight: fixed<22,8>
+      Trace: true
+    fc2_linear:
+      Precision:
+        result: fixed<22,8,RND,SAT>
+      Trace: true
+    fc3:
+      Precision:
+        bias: fixed<22,8>
+        result: fixed<22,8,RND,SAT>
+        weight: fixed<22,8>
+      Trace: true
+    fc3_linear:
+      Precision:
+        result: fixed<22,8,RND,SAT>
+      Trace: true
+    fc4:
+      Precision:
+        bias: fixed<22,8>
+        result: fixed<22,8,RND,SAT>
+        weight: fixed<22,8>
+      Trace: true
+    fc4_linear:
+      Precision:
+        result: fixed<22,8,RND,SAT>
+      Trace: true
+    relu0:
+      Precision:
+        result: fixed<22,8,RND,SAT>
+      Trace: true
+    relu1:
+      Precision:
+        result: fixed<22,8,RND,SAT>
+      Trace: true
+    relu2:
+      Precision:
+        result: fixed<22,8,RND,SAT>
+      Trace: true
+    relu3:
+      Precision:
+        result: fixed<22,8,RND,SAT>
+      Trace: true
+    relu4:
+      Precision:
+        result: fixed<22,8,RND,SAT>
+      Trace: true
+  Model:
+    BramFactor: 1000000000
+    Precision: fixed<22,8,RND,SAT>
+    ReuseFactor: 2
+    Strategy: Latency
+    TraceOutput: true
+IOType: io_parallel
+InputData: null
+KerasModel: !keras_model 'HLS_exp_lat/der1_L4M30W22Q8_sparse/der1/keras_model.h5'
+OutputDir: HLS_exp_lat/der1_L4M30W22Q8_sparse/der1
+OutputPredictions: null
+Part: xc7k325tfbg900-1
+ProjectName: der
+Stamp: ec7f8855
+Version: 1.0.0

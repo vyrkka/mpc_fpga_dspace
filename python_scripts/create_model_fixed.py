@@ -21,9 +21,6 @@ import fcntl
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 
-L1_GAIN = 1e-5
-NEG_SLOPE = 0  # Non-zero for leaky relu
-
 
 def build_dnn_model(nx, M, L, nu, W, Q, loss, reg_type="l1", reg_gain=1e-5, verbose=False, compile=True):
     model = Sequential()
@@ -160,14 +157,14 @@ def test_dnn_model(model, mpc_problem, x_test, y_test, L, M, W, Q):
     return {"mse": scores[1], "mae": scores[2], "mape": scores[3], "r2": np.mean(model_r2)}
 
 
-def create_model(dataset_name, nx, nu, M, L, W, Q, mpc_problem, loss="mse", reg_type="l1", reg_gain=1e-5, train=False, epochs=500, test_size=0.15, patience=3, quantize=False):
+def create_model(dataset_name, nx, nu, M, L, W, Q, mpc_problem, loss="mse", reg_type="l1", reg_gain=1e-5, train=False, epochs=500, test_size=0.15, patience=3, force = False, quantize=False):
     base_route = f"{mpc_problem}/{mpc_problem}L{L}M{M}"
     model_name = f"qm_model_{loss.upper()}_L{L}M{M}W{W}Q{Q}"
 
     X_train, X_test, Y_train, Y_test = preprocess_dataset(
         dataset_name, nx, nu, test_size=test_size, split_seed=42)
 
-    if (train or quantize):
+    if ((train or quantize) and (force or not os.path.exists(f"{mpc_problem}/models/{model_name}"))):
         model = build_dnn_model(nx, M, L,
                                 nu, W, Q, loss, reg_type=reg_type, reg_gain=reg_gain, verbose=True)
         if quantize:
@@ -190,10 +187,10 @@ if __name__ == "__main__":
     train_load = parser.add_mutually_exclusive_group(required=True)
     train_load.add_argument(
         "-t", "--train", help="Train a new model from scratch", action="store_true")
-    train_load.add_argument(
-        "-l", "--load", help="Load an existing model and evaluate it", action="store_true")
     train_load.add_argument("-q", "--quantize", help="Load a float model and retrain it with quantization", action="store_true")
 
+    parser.add_argument(
+        "-f", "--force", help="Force model creation even if it already exists", action="store_true")
     parser.add_argument("--loss", help="Loss function to use during training (default: mse)",
                         choices=["mse", "mape"], default="mse")
     parser.add_argument(
@@ -221,7 +218,7 @@ if __name__ == "__main__":
 
     create_model(args.dataset.name, args.nx, args.nu, args.M, args.L, args.W, args.Q, args.mpc_problem, loss=args.loss,
                  reg_type=args.reg_type, reg_gain=args.reg_gain, train=args.train, epochs=args.epochs, 
-                 test_size=args.test_size, patience=args.patience, quantize=args.quantize)
+                 test_size=args.test_size, patience=args.patience, force=args.force, quantize=args.quantize)
     
     
     

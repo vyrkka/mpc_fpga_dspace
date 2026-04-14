@@ -2,17 +2,17 @@
 // TRAINING NETWORKS
 // =============================================================================
 
-// Entrenar redes motorB (L1, 1e-5)
-python python_scripts/create_model_float.py -t motorB motor/datasets/motorB.csv 3 3 9 1 --reg_type l1 --reg_gain 1e-5
-python python_scripts/create_model_fixed.py -q motorB motor/datasets/motorB.csv 3 21 7 3 9 1 --reg_type l1 --reg_gain 1e-5
+// Train motorB networks (L1, 1e-5)
+python python_scripts/create_model_float.py motor/trained_dnns/motorB motor/datasets/motorB.csv 3 3 9 1 --reg_type l1 --reg_gain 1e-5
+python python_scripts/create_model_fixed.py -q motor/trained_dnns/motorB motor/datasets/motorB.csv 3 21 7 3 9 1 --reg_type l1 --reg_gain 1e-5
 
-// Entrenar redes der1 (L2, 1e-9)
-python python_scripts/create_model_float.py -t der1 der/MIL/der_data1.csv 9 4 30 2 --reg_type l2 --reg_gain 1e-9
-python python_scripts/create_model_fixed.py -q der1 der/MIL/der_data1.csv 9 22 8 4 30 2 --reg_type l2 --reg_gain 1e-9
+// Train der1 networks (L2, 1e-9)
+python python_scripts/create_model_float.py der/trained_dnns/der1 der/MIL/der_data1.csv 9 4 30 2 --reg_type l2 --reg_gain 1e-9
+python python_scripts/create_model_fixed.py -q der/trained_dnns/der1 der/MIL/der_data1.csv 9 22 8 4 30 2 --reg_type l2 --reg_gain 1e-9
 
-// Entrenar redes der2 (L2, 1e-9)
-python python_scripts/create_model_float.py -t der2 der/MIL/der_data2.csv 7 4 30 2 --reg_type l2 --reg_gain 1e-9
-python python_scripts/create_model_fixed.py -q der2 der/MIL/der_data2.csv 7 15 4 4 30 2 --reg_type l2 --reg_gain 1e-9
+// Train der2 networks (L2, 1e-9)
+python python_scripts/create_model_float.py der/trained_dnns/der2 der/MIL/der_data2.csv 7 4 30 2 --reg_type l2 --reg_gain 1e-9
+python python_scripts/create_model_fixed.py -q der/trained_dnns/der2 der/MIL/der_data2.csv 7 15 4 4 30 2 --reg_type l2 --reg_gain 1e-9
 
 // =============================================================================
 // SWEEPS
@@ -34,17 +34,17 @@ chmod +x sweeps/der2_sweep.sh
 // FORMATTING & HLS
 // =============================================================================
 
-// Formatear verilog explicito
+// Format explicit Verilog
 python python_scripts/format_verilogs.py --base-routes W21Q7_sp --carpetas-verilog W21Q7_sp --es-red 1 --inputs vel pos r --outputs u
 
 // Pruning motorB
-python python_scripts/prune_model_float.py motorB 3 9 --threshold 1e-3
-python python_scripts/prune_model_fixed.py motorB 3 9 21 7 --threshold 1e-3
+python python_scripts/prune_model_float.py motor/trained_dnns/motorB 3 9 --threshold 1e-3
+python python_scripts/prune_model_fixed.py motor/trained_dnns/motorB 3 9 21 7 --threshold 1e-3
 
-// Crear archivos HLS4ML
+// Create HLS4ML files
 python python_scripts/create_hls_prj.py motorB 3 9 21 7 --fr 1
 
-// Generar golden references (Explicit MPC)
+// Generate golden references (Explicit MPC)
 python python_scripts/create_golden_ref.py motor/datasets/motorB.csv 3 1 --filelength 10000 --golden_path motor/matlab_cosim_motor/ --in_file motor_in.csv --out_file motor_out.csv
 python python_scripts/create_golden_ref.py der/MIL/der_data1.csv 9 2 --filelength 10000 --golden_path der/cosim/ --in_file data_in1.csv --out_file data_out1.csv
 python python_scripts/create_golden_ref.py der/MIL/der_data2.csv 7 2 --filelength 10000 --golden_path der/cosim/ --in_file data_in2.csv --out_file data_out2.csv
@@ -53,15 +53,14 @@ python python_scripts/create_golden_ref.py der/MIL/der_data2.csv 7 2 --filelengt
 // CONVERT TO MATLAB (H5_TO_MATLAB)
 // =============================================================================
 
-// Procesar redes motorB (L1, 1e-5)
-python python_scripts/h5_to_matlab.py --L 3 --M 9 --W 21 --Q 7 --nx 3 --nu 1 --var_type fixed --problem motorB --pruned --reg_type l1 --reg_gain 1e-5
-python python_scripts/h5_to_matlab.py --L 3 --M 9 --W 21 --Q 7 --nx 3 --nu 1 --var_type fixed --problem motorB --reg_type l1 --reg_gain 1e-5
-python python_scripts/h5_to_matlab.py --L 3 --M 9 --nx 3 --nu 1 --var_type float --problem motorB --pruned --reg_type l1 --reg_gain 1e-5
+// Process motorB networks (L1, 1e-5)
+python python_scripts/h5_to_matlab.py --L 3 --M 9 --W 21 --Q 7 --nx 3 --nu 1 --var_type fixed --problem motor/trained_dnns/motorB --pruned --reg_type l1 --reg_gain 1e-5
+python python_scripts/h5_to_matlab.py --L 3 --M 9 --nx 3 --nu 1 --var_type float --problem motor/trained_dnns/motorB --pruned --reg_type l1 --reg_gain 1e-5
 
-// Procesar redes der1 (L2, 1e-9)
-python python_scripts/h5_to_matlab.py --L 4 --M 30 --W 22 --Q 8 --nx 9 --nu 2 --var_type fixed --problem der1 --pruned --reg_type l2 --reg_gain 1e-9
+// Process der1 networks (L2, 1e-9)
+python python_scripts/h5_to_matlab.py --L 4 --M 30 --W 22 --Q 8 --nx 9 --nu 2 --var_type fixed --problem der/trained_dnns/der1 --pruned --reg_type l2 --reg_gain 1e-9
 python python_scripts/h5_to_matlab.py --L 4 --M 30 --nx 9 --nu 2 --var_type float --problem der1 --reg_type l2 --reg_gain 1e-9
 
-// Procesar redes der2 (L2, 1e-9)
-python python_scripts/h5_to_matlab.py --L 4 --M 30 --W 15 --Q 4 --nx 7 --nu 2 --var_type fixed --problem der2 --pruned --reg_type l2 --reg_gain 1e-9
-python python_scripts/h5_to_matlab.py --L 4 --M 30 --nx 7 --nu 2 --var_type float --problem der2 --reg_type l2 --reg_gain 1e-9
+// Process der2 networks (L2, 1e-9)
+python python_scripts/h5_to_matlab.py --L 4 --M 30 --W 15 --Q 4 --nx 7 --nu 2 --var_type fixed --problem der/trained_dnns/der2 --pruned --reg_type l2 --reg_gain 1e-9
+python python_scripts/h5_to_matlab.py --L 4 --M 30 --nx 7 --nu 2 --var_type float --problem der/trained_dnns/der2 --reg_type l2 --reg_gain 1e-9

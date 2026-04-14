@@ -19,9 +19,6 @@ import time
 import fcntl
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
-L1_GAIN = 1e-5
-#L2_GAIN = 1e-5
-NEG_SLOPE = 0  # Non-zero for leaky relu
 
 def build_dnn_model(nx, M, L, nu, loss, reg_type="l1", reg_gain=1e-5, verbose=False, compile=True):
     model = Sequential()
@@ -79,21 +76,8 @@ def build_dnn_model(nx, M, L, nu, loss, reg_type="l1", reg_gain=1e-5, verbose=Fa
 
     return model
 
-def create_golden_references(data_in, data_out, filelength=10000, filepath=""):
-    with open(filepath + "golden_reference_data_in.csv", 'w', newline="", encoding='UTF8') as fi:
-        lines = []
-        for data in data_in[0:filelength]:
-            lines.append(",".join(map(str, data))+"\n")
-        fi.writelines(lines)
 
-    with open(filepath + "golden_reference_data_out.csv", 'w', newline="", encoding='UTF8') as fo:
-        lines = []
-        for data in data_out[0:filelength]:
-            lines.append(",".join(map(str, data))+"\n")
-        fo.writelines(lines)
-
-
-def preprocess_dataset(filename, nx, nu, test_size=0.15, split_seed=42, mins_max_csv = ''):
+def preprocess_dataset(filename, nx, nu, test_size=0.15, split_seed=42):
     df = pd.read_csv(filename)
 
     scaler = MinMaxScaler()
@@ -118,7 +102,7 @@ def train_dnn_model(model, x_train, y_train, epochs, modelfile_name, val_split_s
     return model, es_cb.stopped_epoch
 
 
-def test_dnn_model(model, x_test, y_test, L, M, model_name, mpc_problem, golden=False, golden_len=10000):
+def test_dnn_model(model, x_test, y_test, L, M, mpc_problem):
     scores = model.evaluate(x_test, y_test)
     print(f"Mean Squared Error: {scores[1]}")
     print(f"Mean Absolute Error: {scores[2]}")
@@ -127,9 +111,7 @@ def test_dnn_model(model, x_test, y_test, L, M, model_name, mpc_problem, golden=
     model_r2 = r2_score(y_test, y_pred, multioutput="raw_values")
     model_mse = mean_squared_error(y_test, y_pred, multioutput="raw_values")
     model_rmse = root_mean_squared_error(y_test, y_pred, multioutput="raw_values")
-    if golden:
-        create_golden_references(
-            x_test, y_test, filelength=golden_len, filepath=f"{mpc_problem}/")
+
     print(f"{'u':<8}{'r2':^15}{'mse':^15}{'rmse':^15}")
     print("\n".join(f"u{i:<7}{r2:^15.5}{mse:^15.4e}{rmse:^15.4e}" for (i, r2, mse, rmse) in zip(list(range(nu)), model_r2, model_mse, model_rmse)))
     print(f"{'Average':<8}{np.mean(model_r2):^15.5}{np.mean(model_mse):^15.4e}{np.mean(model_rmse):^15.4e}")
@@ -143,27 +125,22 @@ def test_dnn_model(model, x_test, y_test, L, M, model_name, mpc_problem, golden=
     return {"mse": scores[1], "mae": scores[2], "mape": scores[3], "r2": np.mean(model_r2)}
 
 
-def create_model(dataset_name, nx, nu, M, L, mpc_problem, loss="mse", reg_type="l1", reg_gain=1e-5, train=False, golden=0, epochs=300, test_size=0.15, patience=10, force=False, quantize=False):
+def create_model(dataset_name, nx, nu, M, L, mpc_problem, loss="mse", reg_type="l1", reg_gain=1e-5, epochs=300, test_size=0.15, patience=10, force=False):
     model_name = f"qm_model_{loss.upper()}_L{L}M{M}float"
-    model_suffix = f"{loss.upper()}_L{L}M{M}float"
     base_route = f"{mpc_problem}/{mpc_problem}L{L}M{M}"
     X_train, X_test, Y_train, Y_test = preprocess_dataset(
-        dataset_name, nx, nu, test_size=test_size, split_seed=42, mins_max_csv=f'{mpc_problem}/mins_max.csv')
+        dataset_name, nx, nu, test_size=test_size, split_seed=42)
 
-    if (train or quantize) and (force or not os.path.exists(f"{mpc_problem}/models/{model_name}")):
+    if(force or not os.path.exists(f"{mpc_problem}/models/{model_name}")):
         model = build_dnn_model(nx, M, L,
                                 nu, loss, reg_type=reg_type, reg_gain=reg_gain, verbose=False)
-        if quantize:
-            old_model_name = f"ref_model_{loss.upper()}_L{L}M{M}W0Q0"
-            model.load_weights(f"{mpc_problem}/models/{old_model_name}")
+        old_model_name = f"ref_model_{loss.upper()}_L{L}M{M}W0Q0"
+        model.load_weights(f"{mpc_problem}/models/{old_model_name}")
         
-        start_time = [time.perf_counter(), time.process_time()]
-        model, total_epochs = train_dnn_model(model, X_train, Y_train, epochs=epochs,
+        model, _ = train_dnn_model(model, X_train, Y_train, epochs=epochs,
                                               modelfile_name=f"{base_route}/models/{model_name}", val_split_size=0.1, batch_size=32, patience=patience)
-        stop_time = [time.perf_counter(), time.process_time()] 
     model.save(f'{base_route}/float_{mpc_problem}_L{L}M{M}.h5')
-    stats = test_dnn_model(model, X_test, Y_test, L, M, model_name=model_suffix,
-                           mpc_problem=mpc_problem)
+    test_dnn_model(model, X_test, Y_test, L, M, mpc_problem=mpc_problem)
 
     return 0
 
@@ -172,19 +149,10 @@ if __name__ == "__main__":
     msg = "Script intended for DNN model creation (floating point) for EMPC controllers"
     parser = argparse.ArgumentParser(description=msg)
 
-    train_load = parser.add_mutually_exclusive_group(required=True)
-    train_load.add_argument(
-        "-t", "--train", help="Train a new model from scratch", action="store_true")
-    train_load.add_argument(
-        "-l", "--load", help="Load an existing model and evaluate it", action="store_true")
-    train_load.add_argument("-q", "--quantize", help="Load an existing model and retrain it (useful for transfer learning)", action="store_true")
-
     parser.add_argument(
         "-f", "--force", help="Force model creation even if it already exists", action="store_true")
     parser.add_argument("--loss", help="Loss function to use during training (default: mse)",
                         choices=["mse", "mape"], default="mse")
-    parser.add_argument(
-        "--golden", help="Generate golden reference CSV data of given size", default=0, type=int)
     parser.add_argument(
         "--epochs", help="Maximum number of training epochs (default: 500)", default=500, type=int)
     parser.add_argument(
@@ -207,9 +175,5 @@ if __name__ == "__main__":
     args.dataset.close()
 
     create_model(args.dataset.name, args.nx, args.nu, args.M, args.L, args.mpc_problem, loss=args.loss,
-                 reg_type=args.reg_type, reg_gain=args.reg_gain, train=args.train, golden=args.golden, 
+                 reg_type=args.reg_type, reg_gain=args.reg_gain, 
                  epochs=args.epochs, test_size=args.test_size, patience=args.patience, force=args.force, quantize=args.quantize)
-    
-    
-    
-

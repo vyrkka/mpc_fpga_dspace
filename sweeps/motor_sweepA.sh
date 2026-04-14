@@ -16,7 +16,7 @@ shift 3 # Shift to access M values
 M_values=("$@")
 
 # Base folder
-TEMPLATE_FOLDER="motorA"
+TEMPLATE_FOLDER="motor/trained_dnns/motorA"
 
 # Loop over M values
 for M in "${M_values[@]}"; do
@@ -24,6 +24,6 @@ for M in "${M_values[@]}"; do
     echo "Creating folder: $FOLDER_NAME"
     mkdir -p "$FOLDER_NAME"
 
-    echo "Running: python create_model_float.py -t motorA train_data/motorA.csv 3 $L $M 1 --reg_type $REG_TYPE --reg_gain $REG_GAIN"
-    python create_model_float.py -t motorA train_data/motorA.csv 3 "$L" "$M" 1 --reg_type "$REG_TYPE" --reg_gain "$REG_GAIN"
+    echo "Running: python create_model_float.py motor/trained_dnns/motorA train_data/motorA.csv 3 $L $M 1 --reg_type $REG_TYPE --reg_gain $REG_GAIN"
+    python create_model_float.py motor/trained_dnns/motorA train_data/motorA.csv 3 "$L" "$M" 1 --reg_type "$REG_TYPE" --reg_gain "$REG_GAIN"
 done

@@ -23,7 +23,7 @@ The project follows a complete design cycle from mathematical theory to physical
     *   **Tools:** Vitis Model Composer and custom Verilog testbenches.
     *   **Scope:** Included in this repo.
 3.  **HIL (Hardware-in-the-Loop):**
-    *   **Goal:** Test the FPGA bitstream and dSPACE configuration in real-time with the physical MicroLabBox, connected to simulated or low-power plant hardware.
+    *   **Goal:** Test the FPGA bitstream and dSPACE configuration in real-time with the physical MicroLabBox, connected to simulated plant.
     *   **Status:** *Performed using dSPACE proprietary tools (ControlDesk/ConfigurationDesk). Out of scope for this repository.*
 4.  **Physical Implementation:**
     *   **Goal:** Final deployment on the physical plant.
@@ -41,7 +41,7 @@ This flow solves the MPC optimization problem in real-time using the **ADMM (Alt
 *   **HLS Stage:** 
     *   The C++ source in `motor/cpp_vitis_hls/` (covering both the `mpc` solver and the observer `estimador`) is synthesized into Verilog using **Xilinx Vitis HLS**.
 *   **Post-Processing:**
-    *   The script `python_scripts/format_verilogs.py` is used to clean and format the HLS-generated Verilog. It also generates the specific metadata needed to configure the modules within the dSPACE environment.
+    *   The script `format_verilogs.py` is used to clean and format the HLS-generated Verilog. It also generates the specific metadata needed to configure the modules within the dSPACE environment.
 *   **SIL Verification:**
     *   The processed modules are verified in the `motor/mpc_implicito_SIL` environment.
 
@@ -49,7 +49,7 @@ This flow solves the MPC optimization problem in real-time using the **ADMM (Alt
 <!-- [PLACEHOLDER: Insert implicit_design_flow.svg here] -->
 
 ### 2. Explicit MPC (DNN-Based)
-This flow replaces real-time optimization with a **Deep Neural Network (DNN)** that approximates the optimal control law, resulting in faster execution and lower FPGA resource consumption.
+This flow replaces real-time optimization with a **Deep Neural Network (DNN)** that approximates the optimal control law.
 
 *   **Data Generation:** 
     *   Run `motor/matlab_scripts_motor/gen_datos.m` to create state-to-actuation datasets for training.
@@ -72,14 +72,11 @@ This flow replaces real-time optimization with a **Deep Neural Network (DNN)** t
 The DER implementation focuses on power electronics control using an **Explicit MPC** flow.
 
 *   **Dataset Generation:** Run `der/MIL/GenerateDataSL.m` to generate state-actuation datasets.
-*   **DNN Training:** Use the same Python workflow as the motor (refer to `python_scripts/`). 
-    *   *Note: Use L2 regularization (gain 1e-9) for DER problems.*
+*   **DNN Training:** Use the same Python workflow as the motor (refer to `python_scripts/`).
 *   **MIL Verification:**
-    1. Run `der/MIL/InitMain.m` to automatically set simulation parameters.
-    2. Execute the Simulink model `der/MIL/SIM_DNNs.slx`.
-    3. Analyze results using the plot scripts in `der/MIL/`.
+    Run `der/MIL/InitMain.m` to set simulation parameters and automatically run `SIM_DNNs.slx` and generate the plots.
 *   **Cosimulation:** Verification is performed using **Vitis Model Composer** in the `der/cosim/` directory.
-*   **Post-Processing:** Use `python_scripts/format_verilogs.py` to prepare the hardware modules for the MicroLabBox.
+*   **Post-Processing:** Use `format_verilogs.py` to prepare the hardware modules for the MicroLabBox.
 
 ---
 
@@ -90,7 +87,7 @@ All scripts include detailed help menus (run with `--help`).
 *   `create_model_float.py / create_model_fixed.py`: Main training scripts for floating-point and quantized DNNs.
 *   `prune_model_float.py / prune_model_fixed.py`: Set small weights to zero based on a threshold to optimize FPGA area.
 *   `create_hls_prj.py`: Automates the generation of `hls4ml` projects for DNN-to-hardware conversion.
-*   `h5_to_matlab.py`: Converts trained QKeras models into a format compatible with MATLAB.
+*   `h5_to_matlab.py`: Converts trained Keras models into a format compatible with MATLAB.
 *   `format_verilogs.py`: Formats HLS output and generates configuration metadata for the config files.
 *   `create_golden_ref.py`: Generates golden reference CSV data from datasets for hardware-software cosimulation validation.
 *   `plot_rmse.py`: Utility script for plotting Root Mean Square Error (RMSE) results.

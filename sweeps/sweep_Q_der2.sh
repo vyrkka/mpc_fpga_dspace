@@ -21,7 +21,7 @@ if ! [[ $START =~ $re && $END =~ $re && $FR_LEN =~ $re ]]; then
 fi
 
 # --- fixed params (edit if needed) ---
-MODEL="der2"
+MODEL="der/trained_dnns/der2"
 DATA="der/MIL/der_data2.csv"
 NX=7
 L=4
