@@ -7,28 +7,28 @@ python python_scripts/create_model_float.py -t motorB motor/datasets/motorB.csv 
 python python_scripts/create_model_fixed.py -q motorB motor/datasets/motorB.csv 3 21 7 3 9 1 --reg_type l1 --reg_gain 1e-5
 
 // Entrenar redes der1 (L2, 1e-9)
-python python_scripts/create_model_float.py -t der1 train_data/der_data1.csv 9 4 30 2 --reg_type l2 --reg_gain 1e-9
-python python_scripts/create_model_fixed.py -q der1 train_data/der_data1.csv 9 22 8 4 30 2 --reg_type l2 --reg_gain 1e-9
+python python_scripts/create_model_float.py -t der1 der/MIL/der_data1.csv 9 4 30 2 --reg_type l2 --reg_gain 1e-9
+python python_scripts/create_model_fixed.py -q der1 der/MIL/der_data1.csv 9 22 8 4 30 2 --reg_type l2 --reg_gain 1e-9
 
 // Entrenar redes der2 (L2, 1e-9)
-python python_scripts/create_model_float.py -t der2 train_data/der_data2.csv 7 4 30 2 --reg_type l2 --reg_gain 1e-9
-python python_scripts/create_model_fixed.py -q der2 train_data/der_data2.csv 7 15 4 4 30 2 --reg_type l2 --reg_gain 1e-9
+python python_scripts/create_model_float.py -t der2 der/MIL/der_data2.csv 7 4 30 2 --reg_type l2 --reg_gain 1e-9
+python python_scripts/create_model_fixed.py -q der2 der/MIL/der_data2.csv 7 15 4 4 30 2 --reg_type l2 --reg_gain 1e-9
 
 // =============================================================================
 // SWEEPS
 // =============================================================================
 
-// Sweep motorB (L1, 1e-5)
+// Sweep motorB (L1, 1e-5, L=3)
 chmod +x sweeps/motor_sweepB.sh
 ./sweeps/motor_sweepB.sh 3 l1 1e-5 5 6 7 8 9 10
 
-// Sweep der1 (L2, 1e-9)
+// Sweep der1 (L2, 1e-9, L=4)
 chmod +x sweeps/der1_sweep.sh
-./sweeps/der1_sweep.sh 4 l2 1e-9 10 20 30
+./sweeps/der1_sweep.sh 4 l2 1e-9 20 30 40
 
-// Sweep der2 (L2, 1e-9)
+// Sweep der2 (L2, 1e-9, L=4)
 chmod +x sweeps/der2_sweep.sh
-./sweeps/der2_sweep.sh 4 l2 1e-9 10 20 30
+./sweeps/der2_sweep.sh 4 l2 1e-9 20 30 40
 
 // =============================================================================
 // FORMATTING & HLS
@@ -45,7 +45,9 @@ python python_scripts/prune_model_fixed.py motorB 3 9 21 7 --threshold 1e-3
 python python_scripts/create_hls_prj.py motorB 3 9 21 7 --fr 1
 
 // Generar golden references (Explicit MPC)
-python python_scripts/create_golden_ref.py motor/datasets/motorB.csv 3 1 --test_size 0.15 --filelength 10000 --golden_path motor/matlab_cosim_motor/ --in_file motor_in.csv --out_file motor_out.csv
+python python_scripts/create_golden_ref.py motor/datasets/motorB.csv 3 1 --filelength 10000 --golden_path motor/matlab_cosim_motor/ --in_file motor_in.csv --out_file motor_out.csv
+python python_scripts/create_golden_ref.py der/MIL/der_data1.csv 9 2 --filelength 10000 --golden_path der/cosim/ --in_file data_in1.csv --out_file data_out1.csv
+python python_scripts/create_golden_ref.py der/MIL/der_data2.csv 7 2 --filelength 10000 --golden_path der/cosim/ --in_file data_in2.csv --out_file data_out2.csv
 
 // =============================================================================
 // CONVERT TO MATLAB (H5_TO_MATLAB)

@@ -14,7 +14,7 @@ REG_GAIN=$4
 
 # --- fixed params (edit if needed) ---
 MODEL="der1"
-DATA="train_data/der_data1.csv"
+DATA="der/MIL/der_data1.csv"
 NX=9
 Q=8        # fixed Q
 L=4

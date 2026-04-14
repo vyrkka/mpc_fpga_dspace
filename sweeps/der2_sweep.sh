@@ -24,6 +24,6 @@ for M in "${M_values[@]}"; do
     echo "Creating folder: $FOLDER_NAME"
     mkdir -p "$FOLDER_NAME"
 
-    echo "Running: python create_model_float.py -t der2 train_data/der_data2.csv 7 $L $M 2 --reg_type $REG_TYPE --reg_gain $REG_GAIN"
-    python create_model_float.py -t der2 train_data/der_data2.csv 7 "$L" "$M" 2 --reg_type "$REG_TYPE" --reg_gain "$REG_GAIN"
+    echo "Running: python create_model_float.py -t der2 der/MIL/der_data2.csv 7 $L $M 2 --reg_type $REG_TYPE --reg_gain $REG_GAIN"
+    python create_model_float.py -t der2 der/MIL/der_data2.csv 7 "$L" "$M" 2 --reg_type "$REG_TYPE" --reg_gain "$REG_GAIN"
 done

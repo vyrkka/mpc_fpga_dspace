@@ -22,7 +22,7 @@ fi
 
 # --- fixed params (edit if needed) ---
 MODEL="der1"
-DATA="train_data/der_data1.csv"
+DATA="der/MIL/der_data1.csv"
 NX=9
 L=4
 M=30

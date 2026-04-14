@@ -7,7 +7,7 @@ The project implements a rigorous **Model-Based Design (MBD)** methodology to of
 
 The current scope focuses on:
 1.  **DC Motor Control:** Implementing both **Implicit MPC** (real-time optimization) and **Explicit MPC** (Deep Neural Networks).
-2.  **Distributed Energy Resources (DER):** [In development - Placeholder].
+2.  **Distributed Energy Resources (DER):** Implementing an **Explicit MPC** flow for power electronics control.
 
 ---
 
@@ -69,8 +69,17 @@ This flow replaces real-time optimization with a **Deep Neural Network (DNN)** t
 ---
 
 ## Distributed Energy Resources (DER)
-<!-- [PLACEHOLDER: Details for DER design flow to be added. 
-Current convention: Use L2 regularization (gain 1e-9) for DER training.] -->
+The DER implementation focuses on power electronics control using an **Explicit MPC** flow.
+
+*   **Dataset Generation:** Run `der/MIL/GenerateDataSL.m` to generate state-actuation datasets.
+*   **DNN Training:** Use the same Python workflow as the motor (refer to `python_scripts/`). 
+    *   *Note: Use L2 regularization (gain 1e-9) for DER problems.*
+*   **MIL Verification:**
+    1. Run `der/MIL/InitMain.m` to automatically set simulation parameters.
+    2. Execute the Simulink model `der/MIL/SIM_DNNs.slx`.
+    3. Analyze results using the plot scripts in `der/MIL/`.
+*   **Cosimulation:** Verification is performed using **Vitis Model Composer** in the `der/cosim/` directory.
+*   **Post-Processing:** Use `python_scripts/format_verilogs.py` to prepare the hardware modules for the MicroLabBox.
 
 ---
 
