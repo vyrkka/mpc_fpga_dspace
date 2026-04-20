@@ -42,7 +42,9 @@ python python_scripts/prune_model_float.py motor/trained_dnns/motorB 3 9 --thres
 python python_scripts/prune_model_fixed.py motor/trained_dnns/motorB 3 9 21 7 --threshold 1e-3
 
 // Create HLS4ML files
-python python_scripts/create_hls_prj.py motorB 3 9 21 7 --fr 1
+python python_scripts/create_hls_prj.py motorB 3 9 21 7 --rf 1
+python python_scripts/create_hls_prj.py der1 4 30 22 8 --rf 2
+python python_scripts/create_hls_prj.py der2 4 30 15 4 --rf 2
 
 // Generate golden references (Explicit MPC)
 python python_scripts/create_golden_ref.py motor/datasets/motorB.csv 3 1 --filelength 10000 --golden_path motor/matlab_cosim_motor/ --in_file motor_in.csv --out_file motor_out.csv

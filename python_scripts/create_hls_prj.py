@@ -12,7 +12,7 @@ def parse_arguments():
     parser.add_argument('M', type=int, help="Number of units per hidden layer.")
     parser.add_argument('W', type=int, help="Total bit width for fixed-point representation.")
     parser.add_argument('Q', type=int, help="Number of integer bits for fixed-point representation.")
-    parser.add_argument('--fr', type=int, default=1, help="Reuse factor for the HLS implementation (default: 1).")
+    parser.add_argument('--rf', type=int, default=1, help="Reuse factor for the HLS implementation (default: 1).")
     return parser.parse_args()
 
 args = parse_arguments()
@@ -50,11 +50,11 @@ model = load_model(h5_name, custom_objects=co)
 #import add_interface
 #granularidad por capa (name) o sino sería model (para todo)
 granularity = 'name'
-fr = args.fr
+rf = args.rf
 config = hls4ml.utils.config_from_keras_model(
     model, 
     granularity=granularity,
-    default_reuse_factor=fr,
+    default_reuse_factor=rf,
     default_precision='fixed<{W},{Q},RND,SAT>'.format(W=W, Q=Q)
     )
 
